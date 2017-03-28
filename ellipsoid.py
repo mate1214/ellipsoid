@@ -38,7 +38,7 @@ class Poly:
         negside=[]
         for p1,p2 in zip(verts,chain(verts[1:],[verts[0]])):
             d1,d2 = (p1-c).dot(normal), (p2-c).dot(normal)
-            t = np.abs(d1)/(np.abs(d2)+np.abs(d2))
+            t = np.abs(d1)/(np.abs(d1)+np.abs(d2))
             if d1<=0:
                 negside.append(p1)
             if d1*d2<0:

@@ -338,10 +338,12 @@ def compareruntimes(startingpoint):
             ]    
     fd = lambda x : 2*(x.T - startingpoint)
     G = gen_rules(vert) #polygon-> megkotesek
-    c = np.array([2,1.5])
-    a = 8
-    b = 12
-    
+#    c = np.array([0,0])
+#    a = np.sqrt(2)
+#    b = np.sqrt(2)
+    c = np.array([0.5,0.5])
+    a = 2
+    b = 2    
     R = np.array([[cos(np.pi/4),-sin(np.pi/4)],
                   [sin(np.pi/4), cos(np.pi/4)]])
     A = np.array([[a,0],
@@ -354,27 +356,6 @@ def compareruntimes(startingpoint):
     return (len(areasP)/len(areasE))
     
 def visualcompare():    
-    vert = [ #CCW felsorolt konvex polygon csucsai, minden csucs pontosan 1x, a szabalyokbol megkaphato lenne
-            np.array([1,-1]),
-            np.array([1,1]),
-            np.array([-1,1]),
-            np.array([-1,-1])
-            ]    
-    fd = lambda x : 2*(x.T - [0,0])
-    G = gen_rules(vert) #polygon-> megkotesek
-    #c = np.array([0.5,0.5])
-    #a = 2
-    #b = 4
-    c = np.array([2,1.5])
-    a = 8
-    b = 12
-    
-    R = np.array([[cos(np.pi/4),-sin(np.pi/4)],
-                  [sin(np.pi/4), cos(np.pi/4)]])
-    A = np.array([[a,0],
-                  [0,b]])
-    B = R.dot(A)
-    E = (c,B)
     
     stepnum = 100   
     
@@ -383,7 +364,7 @@ def visualcompare():
     #Z = np.array([[compareruntimes([i,j]) for j in np.linspace(-1,1,stepnum)] for i in np.linspace(-1,1,stepnum)])
     from multiprocessing import Pool
     from itertools import product
-    with Pool(processes=4) as pool:
+    with Pool(processes=8) as pool:
         linspc= np.linspace(-1,1,stepnum)
         Z =np.array(list(pool.map(compareruntimes, ([x,y] for x,y in product(linspc,linspc)) ))).reshape((stepnum,stepnum))
         plt.imshow(Z,interpolation='none')
